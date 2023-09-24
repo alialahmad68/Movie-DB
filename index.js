@@ -74,5 +74,16 @@ server.get(`/movies/delete`,(request, response) => {
   response.send("delete movie");
 });
 
+server.get(`/movies/read/id/:id?`,(request, response) => {
+  const { id } = request.params; 
+  const movie = movies.find((movie) => movie.id === id);
+
+  if (movie) {
+    response.json({status:200, data:movie});
+  } else {
+    response.status(404).json({ status: 404, error: true, message: `Movie of this ID=${id} not found` });
+  }
+});
+
 server.listen( port,() =>  {
 console.log(`Server listening on port ${port}.`);});
