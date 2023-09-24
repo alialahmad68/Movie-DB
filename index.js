@@ -85,5 +85,18 @@ server.get(`/movies/read/id/:id?`,(request, response) => {
   }
 });
 
+server.get('/movies/add', (request, response) => {
+  const { title, year, rating } = request.query;
+
+  if (!title || isNaN(year) || year.length !== 4) {
+    response.status(403).json({status:403, error:true, message:'you cannot create a movie without providing a title and a year'});
+    return;
+  }
+  const newRating = rating || 4;
+
+  movies.push({ title: title, year: year, rating:parseFloat(newRating)});
+  response.status(200).json({ status: 200, data: movies });
+});
+
 server.listen( port,() =>  {
 console.log(`Server listening on port ${port}.`);});
