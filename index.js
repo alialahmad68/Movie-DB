@@ -110,5 +110,33 @@ server.get(`/movies/delete/:id?`,(request, response) => {
   }
 });
 
+server.get(`/movies/update/:id?`,(request, response) => {
+  const { id } = request.params; 
+  const { title, year, rating } = request.query;
+
+  const movie = movies.find((movie) => movie.id === id);
+
+  if (!movie) {
+    response.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` });
+    return;
+   }
+
+  if (title) {
+    movie.title = title;
+  }
+
+  if (rating) {
+    movie.rating = parseFloat(rating);
+  }
+
+  if (year) {
+    movie.year = parseInt(year);
+  }
+   
+  response.json({ status: 200, data: movies });
+});
+
+
+
 server.listen( port,() =>  {
 console.log(`Server listening on port ${port}.`);});
