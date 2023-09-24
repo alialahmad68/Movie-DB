@@ -98,5 +98,17 @@ server.get('/movies/add', (request, response) => {
   response.status(200).json({ status: 200, data: movies });
 });
 
+server.get(`/movies/delete/:id?`,(request, response) => {
+  const { id } = request.params; 
+  const Index = movies.findIndex((movie) => movie.id == id);
+
+  if (Index !== -1) {
+    movies.splice(Index, 1);
+    response.json({ status: 200, data: movies });
+  } else {
+    response.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` });
+  }
+});
+
 server.listen( port,() =>  {
 console.log(`Server listening on port ${port}.`);});
