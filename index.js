@@ -42,8 +42,28 @@ server.get(`/movies/create`,(request, response) => {
   response.send("create movie");
 });
 
-server.get(`/movies/read`,(request, response) => {
+server.get(`/movies/read/:sort?`,(request, response) => {
+
+const{sort}=request.params;
+
+  if(!sort){
   response.json({status:200, data:movies});
+   
+   }else if(sort==='by-date'){
+    let sortedByYear=[...movies].sort((a, b) => a.year - b.year);
+    response.json({status:200, data:sortedByYear});
+   }
+  else if(sort==='by-rating'){
+    let sortedByRating=[...movies].sort((a, b) => b.rating-a.rating);
+    response.json({status:200, data:sortedByRating});
+  }
+  else if(sort==='by-title'){
+    let sortedByTitle=[...movies].sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+    response.json({status:200, data:sortedByTitle});
+  }
+  else{
+    response.json({status:200, data:"ok"});
+  }
 });
 
 server.get(`/movies/update`,(request, response) => {
