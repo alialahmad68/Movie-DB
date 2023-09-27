@@ -38,7 +38,7 @@ server.get(`/search`, (request, response) => {
   }
 });
 
-server.get(`/movies/create`,(request, response) => {
+server.post(`/movies/create`,(request, response) => {
   response.send("create movie");
 });
 
@@ -66,11 +66,11 @@ const{sort}=request.params;
   }
 });
 
-server.get(`/movies/update`,(request, response) => {
+server.put(`/movies/update`,(request, response) => {
   response.send("update movie");
 });
 
-server.get(`/movies/delete`,(request, response) => {
+server.delete(`/movies/delete`,(request, response) => {
   response.send("delete movie");
 });
 
@@ -85,7 +85,7 @@ server.get(`/movies/read/id/:id?`,(request, response) => {
   }
 });
 
-server.get('/movies/add', (request, response) => {
+server.post('/movies/add', (request, response) => {
   const { title, year, rating } = request.query;
 
   if (!title || isNaN(year) || year.length !== 4) {
@@ -98,7 +98,7 @@ server.get('/movies/add', (request, response) => {
   response.status(200).json({ status: 200, data: movies });
 });
 
-server.get(`/movies/delete/:id?`,(request, response) => {
+server.delete(`/movies/delete/:id?`,(request, response) => {
   const { id } = request.params; 
   const Index = movies.findIndex((movie) => movie.id == id);
 
@@ -110,7 +110,7 @@ server.get(`/movies/delete/:id?`,(request, response) => {
   }
 });
 
-server.get(`/movies/update/:id?`,(request, response) => {
+server.put(`/movies/update/:id?`,(request, response) => {
   const { id } = request.params; 
   const { title, year, rating } = request.query;
 
